@@ -99,12 +99,14 @@
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\screen.cpp" />
+    <ClCompile Include="Source\Vehicle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Frog.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\screen.h" />
+    <ClInclude Include="Source\Vehicle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

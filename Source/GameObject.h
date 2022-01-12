@@ -1,5 +1,6 @@
 #pragma once
 #include "Screen.h"
+#include <iostream>
 
 class GameObject
 {
@@ -12,7 +13,13 @@ public:
 	virtual void setX(int x);
 	virtual void setY(int y);
 
+	virtual int getMaxX();
+	virtual int getMaxY();
+
 	virtual void onWater() = 0;
+
+	virtual void Update() = 0;
+	virtual void Render() = 0;
 
 protected:
 	Vector2 m_position;
@@ -26,4 +33,6 @@ protected:
 	int movingCounter;
 
 	enum class Direction { up, down, left, right, stopped } moving;
+
+	virtual void updateCoords();
 };

@@ -2,6 +2,7 @@
 
 Frog::Frog(Screen& screen) : GameObject(screen)
 {
+	name = "Player";
 	alive = true;
 	isMoving = false;
 	moving = Direction::stopped;
@@ -76,11 +77,6 @@ void Frog::Update() {
 
 void Frog::Render() {
 	m_screen.DrawSprite(m_sprite);
-}
-
-void Frog::updateCoords() {
-	m_sprite.position.x = m_position.x;
-	m_sprite.position.y = m_position.y;
 }
 
 void Frog::onWater() {

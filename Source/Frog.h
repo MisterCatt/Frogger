@@ -7,8 +7,8 @@ public:
 	~Frog();
 
 	void input();
-	void Update();
-	void Render();
+	void Update() override;
+	void Render() override;
 
 	bool getAlive();
 	void setAlive(bool aliveState);
@@ -16,7 +16,6 @@ public:
 private:
 	bool alive;
 
-	void updateCoords();
 	void movingFrog();
 
 	void onWater() override;
