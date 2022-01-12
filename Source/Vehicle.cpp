@@ -32,6 +32,7 @@ int Vehicle::getSpeed() {
 
 void Vehicle::Update() {
 	updateCoords();
+	for(int i = 0; i < vehicleSpeed; i++)
 	vehicleMovement();
 }
 

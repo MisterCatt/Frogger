@@ -3,15 +3,18 @@
 Frog::Frog(Screen& screen) : GameObject(screen)
 {
 	name = "Player";
+
 	alive = true;
 	isMoving = false;
+	onLog = false;
+
 	moving = Direction::stopped;
 	m_sprite = m_screen.LoadSprite("assets/tempFrog.png");
 
-	movingCounter = m_sprite.texture.height;
+	movingCounter = m_sprite.texture.height+1;
 
 	setX(m_screen.GetWindowWidth()/2);
-	setY(m_screen.GetWindowHeight() - m_sprite.texture.height);
+	setY(m_screen.GetWindowHeight() - m_sprite.texture.height*3-3);
 }
 
 Frog::~Frog()
@@ -61,6 +64,7 @@ void Frog::movingFrog() {
 	}
 }
 
+//todo make sure that the character moves its own size in 30 frames
 void Frog::Update() {
 	updateCoords();
 	input();
@@ -68,10 +72,10 @@ void Frog::Update() {
 		movingCounter--;
 	}
 	movingFrog();
-	if (movingCounter == 0) {
+	if (movingCounter <= 0) {
 		isMoving = false;
 		moving = Direction::stopped;
-		movingCounter = m_sprite.texture.height;
+		movingCounter = m_sprite.texture.height+1;
 	}
 }
 

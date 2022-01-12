@@ -15,6 +15,7 @@ public:
 
 private:
 	bool alive;
+	bool onLog;
 
 	void movingFrog();
 

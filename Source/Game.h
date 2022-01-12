@@ -17,6 +17,8 @@ private:
 	
 	void worldWrap(GameObject& vehicle);
 
+	void drawGameBoard();
+
 public:
 	Game(Screen& screen);
 	~Game();
