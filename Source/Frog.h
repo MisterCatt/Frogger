@@ -6,6 +6,8 @@ public:
 	Frog(Screen& screen);
 	~Frog();
 
+	Sound jump;
+
 	void input();
 	void Update() override;
 	void Render() override;

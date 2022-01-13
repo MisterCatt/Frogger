@@ -19,7 +19,7 @@ void WinPosition::Render() {
 }
 
 void WinPosition::setFilled() {
-		m_sprite = m_screen.LoadSprite("assets/test.bmp");
+		m_sprite = m_screen.LoadSprite("assets/frogwin.png");
 		isFilled = true;
 }
 

@@ -8,14 +8,15 @@ Frog::Frog(Screen& screen) : GameObject(screen)
 	onLog = false;
 
 	moving = Direction::stopped;
-	m_sprite = m_screen.LoadSprite("assets/tempFrog.png");
+	m_sprite = m_screen.LoadSprite("assets/tempFrogUp.png");
+	jump = m_screen.LoadSound("assets/jump.ogg");
 
 	movingCounter = m_sprite.texture.height;
 
 	setX(m_screen.GetWindowWidth()/2 - m_sprite.texture.width/2);
 	setY(m_screen.GetWindowHeight() - m_sprite.texture.height);
 
-	setSpeed(2);
+	setSpeed(5);
 
 	startSpeed = 2;
 }
@@ -29,18 +30,22 @@ void Frog::input() {
 		if (m_screen.IsKeyDown(Key::Up)) {
 			isMoving = true;
 			moving = Direction::up;
+			m_sprite = m_screen.LoadSprite("assets/tempFrogUp.png");
 		}
 		else if (m_screen.IsKeyDown(Key::Left)) {
 			isMoving = true;
 			moving = Direction::left;
+			m_sprite = m_screen.LoadSprite("assets/tempFrogLeft.png");
 		}
 		else if (m_screen.IsKeyDown(Key::Right)) {
 			isMoving = true;
 			moving = Direction::right;
+			m_sprite = m_screen.LoadSprite("assets/tempFrogRight.png");
 		}
 		else if (m_screen.IsKeyDown(Key::Down)) {
 			isMoving = true;
 			moving = Direction::down;
+			m_sprite = m_screen.LoadSprite("assets/tempFrogDown.png");
 		}
 	}
 }
@@ -50,15 +55,19 @@ void Frog::movingFrog() {
 	{
 	case Frog::Direction::up:
 		setY(getY()-1);
+		m_screen.PlaySound(jump);
 		break;
 	case Frog::Direction::down:
 		setY(getY() + 1);
+		m_screen.PlaySound(jump);
 		break;
 	case Frog::Direction::left:
 		setX(getX()-1);
+		m_screen.PlaySound(jump);
 		break;
 	case Frog::Direction::right:
 		setX(getX() + 1);
+		m_screen.PlaySound(jump);
 		break;
 	case Frog::Direction::stopped:
 		break;

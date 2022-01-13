@@ -3,6 +3,15 @@
 Game::Game(Screen& screen) : m_screen(screen) {
 	m_player = new Frog(m_screen);
 
+	titleScreenCounter = 300;
+	isTitlescreenUp = true;
+	titleScreen = m_screen.LoadSprite("assets/titlescreen.png");
+
+	crash = m_screen.LoadSound("assets/Crash.ogg");
+
+	//Eric Skiff - Song Name - A Night Of Dizzy Spells - Available at http://EricSkiff.com/music
+	music = m_screen.LoadSound("assets/music.ogg");
+
 	winPoints = 0;
 	lives = 3;
 	alive = true;
@@ -12,11 +21,28 @@ Game::Game(Screen& screen) : m_screen(screen) {
 	for (int i = 0; i < 5; i++)
 		wpsArray.push_back(new WinPosition(m_screen));
 
-	vehicleArray.push_back(new Vehicle(m_screen, 0, false, 3));
+	vehicleArray.push_back(new Vehicle(m_screen, 0, true, 3));
+	vehicleArray.push_back(new Vehicle(m_screen, 0, true, 3));
+	vehicleArray.push_back(new Vehicle(m_screen, 0, true, 3));
+
+	vehicleArray.push_back(new Vehicle(m_screen, 1, false, 3));
+	vehicleArray.push_back(new Vehicle(m_screen, 1, false, 3));
+	vehicleArray.push_back(new Vehicle(m_screen, 1, false, 3));
+
+	vehicleArray.push_back(new Vehicle(m_screen, 2, true, 2));
+	vehicleArray.push_back(new Vehicle(m_screen, 2, true, 2));
+	vehicleArray.push_back(new Vehicle(m_screen, 2, true, 2));
+
+	vehicleArray.push_back(new Vehicle(m_screen, 0, false, 1));
+	vehicleArray.push_back(new Vehicle(m_screen, 0, false, 1));
+	vehicleArray.push_back(new Vehicle(m_screen, 0, false, 1));
+
+	vehicleArray.push_back(new Vehicle(m_screen, 2, false, 2));
+	vehicleArray.push_back(new Vehicle(m_screen, 2, false, 2));
+	vehicleArray.push_back(new Vehicle(m_screen, 2, false, 2));
+
 	vehicleArray.push_back(new Vehicle(m_screen, 1, true, 3));
-	vehicleArray.push_back(new Vehicle(m_screen, 2, true, 2));
-	vehicleArray.push_back(new Vehicle(m_screen, 0, false, 3));
-	vehicleArray.push_back(new Vehicle(m_screen, 2, true, 2));
+	vehicleArray.push_back(new Vehicle(m_screen, 1, true, 3));
 	vehicleArray.push_back(new Vehicle(m_screen, 1, true, 3));
 
 	logArray.push_back(new Log(m_screen, 0, false, 1));
@@ -61,65 +87,97 @@ Game::Game(Screen& screen) : m_screen(screen) {
 	}
 
 	{
-		int temp = 50*9;
-		for (Vehicle* v : vehicleArray) {
-			v->setY(temp);
-			temp += 50;
+		int y = 50*9;
+		int x = 0;
+		int temp = 0;
+		for (int i = 0; i < vehicleArray.size(); i++) {
+			temp++;
+			vehicleArray.at(i)->setY(y);
+			vehicleArray.at(i)->setX(x);
+			x += 300;
+			if (temp == 3) {
+				y += 50;
+				x = 0;
+				temp = 0;
+			}
 		}
 	}
-
 }
 
 void Game::Update() {
-	if (!hasWon) {
-		m_player->Update();
-		m_player->setOnLog(false);
+	if (!isTitlescreenUp) {
+		m_screen.PlaySound(music);
+		if (!hasWon) {
+			if (alive) {
+				m_player->Update();
+				m_player->setOnLog(false);
 
-		for (Log* l : logArray) {
-			l->Update();
-			worldWrap(*l);
+				for (Log* l : logArray) {
+					l->Update();
+					worldWrap(*l);
 
-			onCollision(*l, *m_player);
+					onCollision(*l, *m_player);
+				}
+
+				for (Vehicle* v : vehicleArray) {
+					v->Update();
+					worldWrap(*v);
+
+					onCollision(*v, *m_player);
+				}
+
+				for (WinPosition* w : wpsArray)
+					winCollision(*w, *m_player);
+
+				if (m_player->getY() >= 0 && m_player->getY() <= 50 * 7 && m_player->hasStopped() && !m_player->frogOnLog()) {
+					std::cout << "ded" << std::endl;
+					getHit();
+				}
+
+				if (winPoints == 5) {
+					hasWon = true;
+				}
+				if (lives == 0) {
+					alive = false;
+				}
+			}
 		}
-
-		for (Vehicle* v : vehicleArray) {
-			v->Update();
-			worldWrap(*v);
-
-			onCollision(*v, *m_player);
-		}
-
-		for (WinPosition* w : wpsArray)
-			winCollision(*w, *m_player);
-
-		if (m_player->getY() >= 0 && m_player->getY() <= 50 * 7 && m_player->hasStopped() && !m_player->frogOnLog()) {
-			std::cout << "ded" << std::endl;
-			//getHit();
-		}
-
-		if (winPoints == 5) {
-			hasWon = true;
+	}
+	else
+	{
+		titleScreenCounter--;
+		if (titleScreenCounter <= 0) {
+			isTitlescreenUp = false;
 		}
 	}
 }
 
 void Game::Render() {
-	if (!hasWon) {
-		drawGameBoard();
+	if (!isTitlescreenUp) {
+		if (!hasWon) {
+			if (alive) {
+				drawGameBoard();
 
+				for (Log* l : logArray) {
+					l->Render();
+				}
 
-		for (Log* l : logArray) {
-			l->Render();
+				m_player->Render();
+
+				for (Vehicle* v : vehicleArray) {
+					v->Render();
+				}
+			}
+			else {
+				Loose();
+			}
 		}
-
-		m_player->Render();
-
-		for (Vehicle* v : vehicleArray) {
-			v->Render();
+		else {
+			Win();
 		}
 	}
 	else {
-		win();
+		drawTitleScreen();
 	}
 }
 
@@ -142,13 +200,18 @@ void Game::drawGameBoard() {
 			}
 	}
 
+	m_screen.DrawText(m_screen.GetWindowWidth()/10, m_screen.GetWindowHeight() - 30, {255,255,255}, "Lives: " + std::to_string(lives), 3);
+
 }
 
 void Game::onCollision(GameObject& obj1, Frog& frog) {
 	if ((obj1.getX() <= frog.getMaxX() && obj1.getMaxX() >= frog.getX()) &&
 		(obj1.getY()+1 <= frog.getMaxY()-1 && obj1.getMaxY()-1 >= frog.getY()+1)) {
 		if (obj1.getName() == "Vehicle") {
-			getHit();
+			if (frog.hasStopped()) {
+				getHit();
+				m_screen.PlaySound(crash);
+			}
 		}
 		if (obj1.getName() == "Log") {
 			if (!obj1.goingLeft()) {
@@ -200,9 +263,13 @@ void Game::worldWrap(GameObject& vehicle) {
 		vehicle.setX(-120);
 }
 
-void Game::win() {
-	m_screen.DrawText(m_screen.GetWindowWidth() / 2, m_screen.GetWindowHeight() / 2, { 255,255,255 }, "You won!", 5);
+void Game::Win() {
+	m_screen.DrawText(m_screen.GetWindowWidth() / 2 -240, m_screen.GetWindowHeight() / 2, { 255,255,255 }, "You win!", 5);
+}void Game::Loose() {
+	m_screen.DrawText(m_screen.GetWindowWidth() / 2 - 330, m_screen.GetWindowHeight() / 2, { 255,255,255 }, "You lost :(", 5);
 }
+
+
 
 void Game::runGame() {
 	this->Render();
@@ -211,4 +278,8 @@ void Game::runGame() {
 
 Game::~Game() {
 
+}
+
+void Game::drawTitleScreen() {
+	m_screen.DrawSprite(titleScreen);
 }

@@ -11,6 +11,11 @@ private:
 	Screen& m_screen;
 	Frog* m_player;
 
+	Sound crash;
+	Sound music;
+
+	Sprite titleScreen;
+
 	std::vector<Vehicle*> vehicleArray;
 	std::vector<Log*> logArray;
 	std::vector<WinPosition*> wpsArray;
@@ -21,7 +26,11 @@ private:
 	int winPoints;
 	bool hasWon;
 
-	void win();
+	int titleScreenCounter;
+	bool isTitlescreenUp;
+
+	void Win();
+	void Loose();
 
 	void getHit();
 
@@ -33,6 +42,7 @@ private:
 	void worldWrap(GameObject& vehicle);
 
 	void drawGameBoard();
+	void drawTitleScreen();
 
 public:
 	Game(Screen& screen);
