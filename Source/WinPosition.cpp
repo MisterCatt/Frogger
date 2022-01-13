@@ -19,12 +19,10 @@ void WinPosition::Render() {
 }
 
 void WinPosition::setFilled() {
-	if (!isFilled) {
-		m_sprite = m_screen.LoadSprite("test.bmp");
+		m_sprite = m_screen.LoadSprite("assets/test.bmp");
 		isFilled = true;
-	}
 }
 
-bool WinPosition::getFilled() {
+bool WinPosition::filled() {
 	return isFilled;
 }

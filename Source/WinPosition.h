@@ -11,7 +11,7 @@ public:
 	void Render() override;
 
 	void setFilled();
-	bool getFilled();
+	bool filled();
 
 private:
 	bool isFilled;

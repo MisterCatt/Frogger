@@ -35,19 +35,11 @@ void Log::Render() {
 void Log::logMovement() {
 	switch (moving)
 	{
-	case Log::Direction::up:
-		setY(getY() - 1);
-		break;
-	case Log::Direction::down:
-		setY(getY() + 1);
-		break;
 	case Log::Direction::left:
 		setX(getX() - 1);
 		break;
 	case Log::Direction::right:
 		setX(getX() + 1);
-		break;
-	case Log::Direction::stopped:
 		break;
 	default:
 		break;
