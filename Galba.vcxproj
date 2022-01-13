@@ -98,6 +98,7 @@
     <ClCompile Include="Source\Frog.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\screen.cpp" />
     <ClCompile Include="Source\Vehicle.cpp" />
   </ItemGroup>
@@ -105,6 +106,7 @@
     <ClInclude Include="Source\Frog.h" />
     <ClInclude Include="Source\Game.h" />
     <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\Log.h" />
     <ClInclude Include="Source\screen.h" />
     <ClInclude Include="Source\Vehicle.h" />
   </ItemGroup>

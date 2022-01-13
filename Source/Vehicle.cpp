@@ -1,7 +1,7 @@
 #include "Vehicle.h"
 
 Vehicle::Vehicle(Screen& screen, int vehicle = 0,  bool goingLeft = false, int speed = 30) : GameObject(screen) {
-	name = "Vehicle";
+	m_name = "Vehicle";
 
 	if(vehicle == 0)
 	m_sprite = m_screen.LoadSprite("assets/Vehicle1.png");
@@ -10,7 +10,7 @@ Vehicle::Vehicle(Screen& screen, int vehicle = 0,  bool goingLeft = false, int s
 	else
 	m_sprite = m_screen.LoadSprite("assets/Vehicle3.png");
 
-	vehicleSpeed = speed;
+	m_speed = speed;
 
 	if (goingLeft)
 		moving = Direction::left;
@@ -22,17 +22,9 @@ Vehicle::~Vehicle() {
 
 }
 
-void Vehicle::setSpeed(int speed){
-	vehicleSpeed = speed;
-}
-
-int Vehicle::getSpeed() {
-	return vehicleSpeed;
-}
-
 void Vehicle::Update() {
 	updateCoords();
-	for(int i = 0; i < vehicleSpeed; i++)
+	for(int i = 0; i < m_speed; i++)
 	vehicleMovement();
 }
 
@@ -60,7 +52,4 @@ void Vehicle::vehicleMovement() {
 	default:
 		break;
 	}
-}
-void Vehicle::onWater() {
-	return;
 }

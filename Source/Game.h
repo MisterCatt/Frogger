@@ -2,6 +2,7 @@
 #include "Frog.h"
 #include "Vehicle.h"
 #include <vector>
+#include "Log.h"
 
 class Game
 {
@@ -10,10 +11,11 @@ private:
 	Frog* m_player;
 
 	std::vector<Vehicle*> vehicleArray;
+	std::vector<Log*> logArray;
 
 	void Update();
 	void Render();
-	void onCollision(GameObject& obj1, GameObject& obj2);
+	void onCollision(GameObject& obj1, Frog& obj2);
 	
 	void worldWrap(GameObject& vehicle);
 

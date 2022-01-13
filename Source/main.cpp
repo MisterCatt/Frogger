@@ -3,11 +3,11 @@
 #include "Game.h"
 
 int screenWidth = 1000;
-int screenHeight = 1000;
+int screenHeight = 800;
 
 int main(int argc, char** argv)
 {
-	Screen screen(screenWidth, screenHeight, "Galba");
+	Screen screen(screenWidth, screenHeight, "Frogger");
 	Game* frogger = new Game(screen);
 
 #pragma endregion;

@@ -13,12 +13,18 @@ public:
 	bool getAlive();
 	void setAlive(bool aliveState);
 
+	bool hasStopped();
+
+	bool frogOnLog();
+	void setOnLog(bool frogOnLog);
+
 private:
 	bool alive;
 	bool onLog;
+	int startSpeed;
 
 	void movingFrog();
 
-	void onWater() override;
+	void onWater();
 	
 };

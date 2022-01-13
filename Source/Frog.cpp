@@ -2,7 +2,7 @@
 
 Frog::Frog(Screen& screen) : GameObject(screen)
 {
-	name = "Player";
+	m_name = "Player";
 
 	alive = true;
 	isMoving = false;
@@ -11,10 +11,14 @@ Frog::Frog(Screen& screen) : GameObject(screen)
 	moving = Direction::stopped;
 	m_sprite = m_screen.LoadSprite("assets/tempFrog.png");
 
-	movingCounter = m_sprite.texture.height+1;
+	movingCounter = m_sprite.texture.height;
 
-	setX(m_screen.GetWindowWidth()/2);
-	setY(m_screen.GetWindowHeight() - m_sprite.texture.height*3-3);
+	setX(m_screen.GetWindowWidth()/2 - m_sprite.texture.width/2);
+	setY(m_screen.GetWindowHeight() - m_sprite.texture.height);
+
+	setSpeed(2);
+
+	startSpeed = 2;
 }
 
 Frog::~Frog()
@@ -69,13 +73,14 @@ void Frog::Update() {
 	updateCoords();
 	input();
 	if (isMoving) {
-		movingCounter--;
+		movingCounter-=m_speed;
 	}
+	for(int i = 0; i < m_speed; i++)
 	movingFrog();
 	if (movingCounter <= 0) {
 		isMoving = false;
 		moving = Direction::stopped;
-		movingCounter = m_sprite.texture.height+1;
+		movingCounter = m_sprite.texture.height;
 	}
 }
 
@@ -93,4 +98,19 @@ bool Frog::getAlive() {
 
 void Frog::setAlive(bool aliveState) {
 	alive = aliveState;
+}
+
+bool Frog::hasStopped() {
+	if (moving == Direction::stopped)
+		return true;
+	else
+		return false;
+}
+
+bool Frog::frogOnLog() {
+	return onLog;
+}
+
+void Frog::setOnLog(bool frogOnLog) {
+	onLog = frogOnLog;
 }
