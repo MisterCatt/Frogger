@@ -13,6 +13,16 @@ private:
 	std::vector<Vehicle*> vehicleArray;
 	std::vector<Log*> logArray;
 
+	int lives;
+	bool alive;
+
+	int winPoints;
+	bool hasWon;
+
+	void win();
+
+	void getHit();
+
 	void Update();
 	void Render();
 	void onCollision(GameObject& obj1, Frog& obj2);

@@ -4,7 +4,6 @@ Frog::Frog(Screen& screen) : GameObject(screen)
 {
 	m_name = "Player";
 
-	alive = true;
 	isMoving = false;
 	onLog = false;
 
@@ -75,8 +74,9 @@ void Frog::Update() {
 	if (isMoving) {
 		movingCounter-=m_speed;
 	}
-	for(int i = 0; i < m_speed; i++)
-	movingFrog();
+	for (int i = 0; i < m_speed; i++) {
+		movingFrog();
+	}
 	if (movingCounter <= 0) {
 		isMoving = false;
 		moving = Direction::stopped;
@@ -86,18 +86,6 @@ void Frog::Update() {
 
 void Frog::Render() {
 	m_screen.DrawSprite(m_sprite);
-}
-
-void Frog::onWater() {
-	alive = false; 
-}
-
-bool Frog::getAlive() {
-	return alive;
-}
-
-void Frog::setAlive(bool aliveState) {
-	alive = aliveState;
 }
 
 bool Frog::hasStopped() {
