@@ -1,3 +1,4 @@
+//Daniel Mardunovich
 #pragma once
 #include "GameObject.h"
 class Log : public GameObject

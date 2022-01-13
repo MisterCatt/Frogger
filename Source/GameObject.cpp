@@ -1,3 +1,4 @@
+//Daniel Mardunovich
 #include "GameObject.h"
 
 GameObject::GameObject(Screen& screen) : m_screen(screen)

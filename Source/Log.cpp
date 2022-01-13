@@ -1,3 +1,4 @@
+//Daniel Mardunovich
 #include "Log.h"
 
 Log::Log(Screen& screen, int log = 0,bool goingLeft = false, int speed = 30) : GameObject(screen) {

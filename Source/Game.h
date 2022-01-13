@@ -1,3 +1,4 @@
+//Daniel Mardunovich
 #pragma once
 #include "Frog.h"
 #include "Vehicle.h"
@@ -15,6 +16,9 @@ private:
 	Sound music;
 
 	Sprite titleScreen;
+
+	std::vector<Sprite> froglife;
+	//Sprite frogLife;
 
 	std::vector<Vehicle*> vehicleArray;
 	std::vector<Log*> logArray;
@@ -38,6 +42,7 @@ private:
 	void Render();
 	void onCollision(GameObject& obj1, Frog& frog);
 	void winCollision(WinPosition& wps, Frog& frog);
+	void frogOutsideScreen(Frog& frog);
 	
 	void worldWrap(GameObject& vehicle);
 

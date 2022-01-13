@@ -1,3 +1,4 @@
+//Daniel Mardunovich
 #include "Frog.h"
 
 Frog::Frog(Screen& screen) : GameObject(screen)

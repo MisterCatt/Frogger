@@ -1,8 +1,22 @@
+//Daniel Mardunovich
 #include "Game.h"
 
 Game::Game(Screen& screen) : m_screen(screen) {
 	m_player = new Frog(m_screen);
 
+	for (int i = 0; i < 3; i++) {
+		froglife.push_back(m_screen.LoadSprite("assets/tempfrogup.png"));
+	}
+
+	{
+		int tempX = m_screen.GetWindowWidth() / 5;
+		for (Sprite& s : froglife) {
+			s.position.x = tempX;
+			s.position.y = m_screen.GetWindowHeight() - 30;
+			s.scale /= 2;
+			tempX += 30;
+		}
+	}
 	titleScreenCounter = 300;
 	isTitlescreenUp = true;
 	titleScreen = m_screen.LoadSprite("assets/titlescreen.png");
@@ -140,6 +154,8 @@ void Game::Update() {
 				if (lives == 0) {
 					alive = false;
 				}
+
+				frogOutsideScreen(*m_player);
 			}
 		}
 	}
@@ -200,8 +216,12 @@ void Game::drawGameBoard() {
 			}
 	}
 
-	m_screen.DrawText(m_screen.GetWindowWidth()/10, m_screen.GetWindowHeight() - 30, {255,255,255}, "Lives: " + std::to_string(lives), 3);
+	m_screen.DrawText(m_screen.GetWindowWidth() / 50, m_screen.GetWindowHeight() - 30, { 255,255,255 }, "Lives: ", 3);
 
+		
+	for (int i = 0; i < lives; i++) {
+		m_screen.DrawSprite(froglife.at(i));
+		}
 }
 
 void Game::onCollision(GameObject& obj1, Frog& frog) {
@@ -282,4 +302,13 @@ Game::~Game() {
 
 void Game::drawTitleScreen() {
 	m_screen.DrawSprite(titleScreen);
+}
+
+void Game::frogOutsideScreen(Frog& frog) {
+	if (frog.getX() < 0-(frog.getMaxX()-frog.getX())) {
+		getHit();
+	}
+	else if (frog.getX() > m_screen.GetWindowWidth() + (frog.getMaxX() - frog.getX())) {
+		getHit();
+	}
 }

@@ -1,3 +1,4 @@
+//Daniel Mardunovich
 #include "Vehicle.h"
 
 Vehicle::Vehicle(Screen& screen, int vehicle = 0,  bool goingLeft = false, int speed = 30) : GameObject(screen) {
