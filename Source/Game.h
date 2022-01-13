@@ -3,6 +3,7 @@
 #include "Vehicle.h"
 #include <vector>
 #include "Log.h"
+#include "WinPosition.h"
 
 class Game
 {
@@ -12,6 +13,7 @@ private:
 
 	std::vector<Vehicle*> vehicleArray;
 	std::vector<Log*> logArray;
+	std::vector<WinPosition*> wpsArray;
 
 	int lives;
 	bool alive;
@@ -25,7 +27,8 @@ private:
 
 	void Update();
 	void Render();
-	void onCollision(GameObject& obj1, Frog& obj2);
+	void onCollision(GameObject& obj1, Frog& frog);
+	void winCollision(WinPosition& wps, Frog& frog);
 	
 	void worldWrap(GameObject& vehicle);
 

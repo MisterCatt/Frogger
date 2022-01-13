@@ -6,6 +6,10 @@ WinPosition::WinPosition(Screen& screen) : GameObject(screen) {
 	isFilled = false;
 }
 
+WinPosition::~WinPosition() {
+
+}
+
 void WinPosition::Update() {
 	updateCoords();
 }

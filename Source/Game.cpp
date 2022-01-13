@@ -9,6 +9,9 @@ Game::Game(Screen& screen) : m_screen(screen) {
 
 	hasWon = false;
 
+	for (int i = 0; i < 5; i++)
+		wpsArray.push_back(new WinPosition(m_screen));
+
 	vehicleArray.push_back(new Vehicle(m_screen, 0, false, 3));
 	vehicleArray.push_back(new Vehicle(m_screen, 1, true, 3));
 	vehicleArray.push_back(new Vehicle(m_screen, 2, true, 2));
@@ -59,8 +62,11 @@ void Game::Update() {
 		onCollision(*v, *m_player);
 	}
 
+	for (WinPosition* w : wpsArray)
+		winCollision(*w, *m_player);
+
 	if (m_player->getY() >= 100 && m_player->getY() <= 50*7 && m_player->hasStopped() && !m_player->frogOnLog()) {
-		getHit();
+		//getHit();
 	}
 }
 
@@ -88,9 +94,13 @@ void Game::drawGameBoard() {
 
 	{
 		int temp = m_screen.GetWindowWidth() / 6.45;
-		for (int i = 0; i < 5; i++) {
-				m_screen.DrawRectangle(temp, 40, 70, 60);
+		for (WinPosition* w : wpsArray) {
+
+				w->setX(temp);
+				w->setY(50);
 				temp += m_screen.GetWindowWidth()/6.45;
+				w->Update();
+				w->Render();
 			}
 	}
 
@@ -116,6 +126,17 @@ void Game::onCollision(GameObject& obj1, Frog& frog) {
 							frog.setX(frog.getX() - 1);
 					}
 		}
+	}
+}
+
+void Game::winCollision(WinPosition& wps, Frog& frog) {
+	if ((wps.getX() <= frog.getMaxX() && wps.getMaxX() >= frog.getX()) &&
+		(wps.getY() + 1 <= frog.getMaxY() - 1 && wps.getMaxY() - 1 >= frog.getY() + 1)) {
+		if (frog.hasStopped() && wps.getFilled()) {
+			std::cout << "win" << std::endl;
+			wps.setFilled();
+		}
+		
 	}
 }
 

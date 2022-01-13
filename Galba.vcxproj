@@ -101,6 +101,7 @@
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\screen.cpp" />
     <ClCompile Include="Source\Vehicle.cpp" />
+    <ClCompile Include="Source\WinPosition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Frog.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Source\Log.h" />
     <ClInclude Include="Source\screen.h" />
     <ClInclude Include="Source\Vehicle.h" />
+    <ClInclude Include="Source\WinPosition.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
